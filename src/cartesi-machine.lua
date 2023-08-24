@@ -1461,6 +1461,14 @@ local function check_rollup_htif_config(htif)
     assert(htif.yield_automatic, "yield automatic must be enabled for rollup")
 end
 
+local function get_halt(machine)
+    local cmd = machine:read_htif_tohost_cmd()
+    local data = machine:read_htif_tohost_data() >> 1 -- lsb is always 1
+    local type = data >> 32
+    local reason = data & 0xffffffff
+    return cmd, type, reason
+end
+
 local function get_yield(machine)
     local cmd = machine:read_htif_tohost_cmd()
     local data = machine:read_htif_tohost_data()
@@ -1698,9 +1706,10 @@ else
         cycles = machine:read_mcycle()
         -- deal with halt
         if machine:read_iflags_H() then
+            local _, type, reason = get_halt(machine)
             exit_code = machine:read_htif_tohost_data() >> 1
             if exit_code ~= 0 then
-                stderr("\nHalted with payload: %u\n", exit_code)
+                stderr("\nHalted with payload: %u.%u\n", type, reason)
             else
                 stderr("\nHalted\n")
             end
