@@ -632,9 +632,6 @@ local options = {
             rollup = rollup or {}
             rollup.rx_buffer = { start = 0x60000000, length = 2 << 20 }
             rollup.tx_buffer = { start = 0x60200000, length = 2 << 20 }
-            rollup.input_metadata = { start = 0x60400000, length = 4096 }
-            rollup.voucher_hashes = { start = 0x60600000, length = 2 << 20 }
-            rollup.notice_hashes = { start = 0x60800000, length = 2 << 20 }
             htif_yield_automatic = true
             htif_yield_manual = true
             return true
@@ -1667,9 +1664,6 @@ else
         assert(remote_address, "rollup requires --remote-address for snapshot/rollback")
         check_rollup_memory_range_config(config.rollup.tx_buffer, "tx-buffer")
         check_rollup_memory_range_config(config.rollup.rx_buffer, "rx-buffer")
-        check_rollup_memory_range_config(config.rollup.input_metadata, "input-metadata")
-        check_rollup_memory_range_config(config.rollup.voucher_hashes, "voucher-hashes")
-        check_rollup_memory_range_config(config.rollup.notice_hashes, "notice-hashes")
     end
     local cycles = machine:read_mcycle()
     if initial_hash then

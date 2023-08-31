@@ -115,9 +115,8 @@ struct htif_config final {
 struct rollup_config {                    // NOLINT(bugprone-exception-escape)
     memory_range_config rx_buffer{};      ///< RX buffer
     memory_range_config tx_buffer{};      ///< TX buffer
-    memory_range_config input_metadata{}; ///< Buffer for input metadata
-    memory_range_config voucher_hashes{}; ///< Buffer for the voucher hash array
-    memory_range_config notice_hashes{};  ///< Buffer for the notice hash array
+    memory_range_config hash_types{};     ///<
+    memory_range_config hash_values{};    ///<
 };
 
 /// \brief Machine state configuration

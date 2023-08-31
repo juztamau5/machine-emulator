@@ -38,9 +38,6 @@ void set_proto_memory_range(const memory_range_config &m, CartesiMachine::Memory
 void set_proto_rollup(const rollup_config &r, CartesiMachine::RollupConfig *proto_r) {
     set_proto_memory_range(r.rx_buffer, proto_r->mutable_rx_buffer());
     set_proto_memory_range(r.tx_buffer, proto_r->mutable_tx_buffer());
-    set_proto_memory_range(r.input_metadata, proto_r->mutable_input_metadata());
-    set_proto_memory_range(r.voucher_hashes, proto_r->mutable_voucher_hashes());
-    set_proto_memory_range(r.notice_hashes, proto_r->mutable_notice_hashes());
 }
 
 void set_proto_machine_config(const machine_config &c, CartesiMachine::MachineConfig *proto_c) {
@@ -792,15 +789,6 @@ rollup_config get_proto_rollup_config(const CartesiMachine::RollupConfig &proto_
     }
     if (proto_r.has_tx_buffer()) {
         r.tx_buffer = get_proto_memory_range_config(proto_r.tx_buffer());
-    }
-    if (proto_r.has_input_metadata()) {
-        r.input_metadata = get_proto_memory_range_config(proto_r.input_metadata());
-    }
-    if (proto_r.has_voucher_hashes()) {
-        r.voucher_hashes = get_proto_memory_range_config(proto_r.voucher_hashes());
-    }
-    if (proto_r.has_input_metadata()) {
-        r.notice_hashes = get_proto_memory_range_config(proto_r.notice_hashes());
     }
     return r;
 }

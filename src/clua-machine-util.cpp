@@ -835,12 +835,6 @@ static void push_cm_rollup_config(lua_State *L, const cm_rollup_config *r) {
     lua_setfield(L, -2, "rx_buffer");                   // rollup
     push_cm_memory_range_config(L, &r->tx_buffer);      // rollup tx_buffer
     lua_setfield(L, -2, "tx_buffer");                   // rollup
-    push_cm_memory_range_config(L, &r->input_metadata); // rollup input_metadata
-    lua_setfield(L, -2, "input_metadata");              // rollup
-    push_cm_memory_range_config(L, &r->voucher_hashes); // rollup voucher_hashes
-    lua_setfield(L, -2, "voucher_hashes");              // rollup
-    push_cm_memory_range_config(L, &r->notice_hashes);  // rollup notice_hashes
-    lua_setfield(L, -2, "notice_hashes");               // rollup
 }
 
 /// \brief Pushes cm_flash_drive_configs to the Lua stack
@@ -982,15 +976,6 @@ static void check_cm_rollup_config(lua_State *L, int tabidx, cm_rollup_config *r
     lua_pop(L, 1);
     lua_getfield(L, -1, "tx_buffer");
     clua_check_cm_memory_range_config(L, -1, "rollup rx buffer", &r->tx_buffer);
-    lua_pop(L, 1);
-    lua_getfield(L, -1, "input_metadata");
-    clua_check_cm_memory_range_config(L, -1, "rollup input metadata", &r->input_metadata);
-    lua_pop(L, 1);
-    lua_getfield(L, -1, "voucher_hashes");
-    clua_check_cm_memory_range_config(L, -1, "rollup voucher hashes", &r->voucher_hashes);
-    lua_pop(L, 1);
-    lua_getfield(L, -1, "notice_hashes");
-    clua_check_cm_memory_range_config(L, -1, "rollup notice hashes", &r->notice_hashes);
     lua_pop(L, 2);
 }
 
