@@ -235,9 +235,6 @@ typedef struct {                           // NOLINT(modernize-use-using)
     bool has_value;                        ///< Represents whether the rest of the struct have been filled
     cm_memory_range_config rx_buffer;      ///< RX buffer memory range
     cm_memory_range_config tx_buffer;      ///< TX buffer memory range
-    cm_memory_range_config input_metadata; ///< Input metadata memory range
-    cm_memory_range_config voucher_hashes; ///< Voucher hashes memory range
-    cm_memory_range_config notice_hashes;  ///< Notice hashes memory range
 } cm_rollup_config;
 
 /// \brief microarchitecture RAM configuration

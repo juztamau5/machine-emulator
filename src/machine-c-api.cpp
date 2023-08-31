@@ -286,8 +286,7 @@ static std::optional<cartesi::rollup_config> convert_from_c(const cm_rollup_conf
         return {};
     }
     cartesi::rollup_config new_cpp_rollup_config{convert_from_c(&c_config->rx_buffer),
-        convert_from_c(&c_config->tx_buffer), convert_from_c(&c_config->input_metadata),
-        convert_from_c(&c_config->voucher_hashes), convert_from_c(&c_config->notice_hashes)};
+        convert_from_c(&c_config->tx_buffer)};
     return new_cpp_rollup_config;
 }
 
@@ -299,9 +298,6 @@ static cm_rollup_config convert_to_c(const std::optional<cartesi::rollup_config>
     }
     new_c_rollup_config.rx_buffer = convert_to_c(cpp_config->rx_buffer);
     new_c_rollup_config.tx_buffer = convert_to_c(cpp_config->tx_buffer);
-    new_c_rollup_config.input_metadata = convert_to_c(cpp_config->input_metadata);
-    new_c_rollup_config.voucher_hashes = convert_to_c(cpp_config->voucher_hashes);
-    new_c_rollup_config.notice_hashes = convert_to_c(cpp_config->notice_hashes);
     return new_c_rollup_config;
 }
 
@@ -708,9 +704,6 @@ void cm_delete_machine_config(const cm_machine_config *config) {
     delete[] config->tlb.image_filename;
     delete[] config->rollup.rx_buffer.image_filename;
     delete[] config->rollup.tx_buffer.image_filename;
-    delete[] config->rollup.input_metadata.image_filename;
-    delete[] config->rollup.voucher_hashes.image_filename;
-    delete[] config->rollup.notice_hashes.image_filename;
     delete[] config->uarch.ram.image_filename;
 
     delete config;

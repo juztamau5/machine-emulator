@@ -53,9 +53,6 @@ static void adjust_image_filenames(machine_config &c, const std::string &dir) {
         auto &r = c.rollup.value();
         r.rx_buffer.image_filename = c.get_image_filename(dir, r.rx_buffer);
         r.tx_buffer.image_filename = c.get_image_filename(dir, r.tx_buffer);
-        r.input_metadata.image_filename = c.get_image_filename(dir, r.input_metadata);
-        r.voucher_hashes.image_filename = c.get_image_filename(dir, r.voucher_hashes);
-        r.notice_hashes.image_filename = c.get_image_filename(dir, r.notice_hashes);
     }
 
     if (c.uarch.ram.length > 0) {

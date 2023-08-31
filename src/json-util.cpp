@@ -916,9 +916,6 @@ void ju_get_opt_field(const nlohmann::json &j, const K &key, rollup_config &valu
     const auto new_path = path + to_string(key) + "/";
     ju_get_field(jconfig, "rx_buffer"s, value.rx_buffer, new_path);
     ju_get_field(jconfig, "tx_buffer"s, value.tx_buffer, new_path);
-    ju_get_field(jconfig, "input_metadata"s, value.input_metadata, new_path);
-    ju_get_field(jconfig, "voucher_hashes"s, value.voucher_hashes, new_path);
-    ju_get_field(jconfig, "notice_hashes"s, value.notice_hashes, new_path);
 }
 
 template void ju_get_opt_field<uint64_t>(const nlohmann::json &j, const uint64_t &key, rollup_config &value,
@@ -940,9 +937,6 @@ void ju_get_opt_field(const nlohmann::json &j, const K &key, std::optional<rollu
     auto &value = optional.value();
     ju_get_field(jconfig, "rx_buffer"s, value.rx_buffer, new_path);
     ju_get_field(jconfig, "tx_buffer"s, value.tx_buffer, new_path);
-    ju_get_field(jconfig, "input_metadata"s, value.input_metadata, new_path);
-    ju_get_field(jconfig, "voucher_hashes"s, value.voucher_hashes, new_path);
-    ju_get_field(jconfig, "notice_hashes"s, value.notice_hashes, new_path);
 }
 
 template void ju_get_opt_field<uint64_t>(const nlohmann::json &j, const uint64_t &key,
@@ -1159,9 +1153,6 @@ void to_json(nlohmann::json &j, const rollup_config &config) {
     j = nlohmann::json{
         {"rx_buffer", config.rx_buffer},
         {"tx_buffer", config.tx_buffer},
-        {"input_metadata", config.input_metadata},
-        {"voucher_hashes", config.voucher_hashes},
-        {"notice_hashes", config.notice_hashes},
     };
 }
 
