@@ -105,24 +105,24 @@ void tty_initialize(void) {
         s->oldtty = tty;
         // Set terminal to "raw" mode
         tty.c_lflag &= ~(ECHO | // Echo off
-            ICANON |            // Canonical mode off
-            ECHONL |            // Do not echo NL (redundant with ECHO and ICANON)
-            ISIG |              // Signal chars off
-            IEXTEN              // Extended input processing off
+            ICANON |            // Canonical mode off (input byte-by-byte, no input processing, disable line editing)
+            ISIG |              // Signal chars off (e.g., CTRL+C and CTRL+Z)
+            IEXTEN |            // Extended input processing off (e.g. disable CTRL+V processing)
+            ECHONL              // Do not echo NL despite ECHO being off
         );
-        tty.c_iflag &= ~(IGNBRK | // Generate \377 \0 \0 on BREAK
-            BRKINT |              //
-            PARMRK |              //
-            ICRNL |               // No CR-to-NL
+        tty.c_iflag &= ~(BRKINT | // --
+            PARMRK |              // Generate \377 \0 \0 on BREAK
+            IGNBRK |              // --
+            ICRNL |               // No CR-to-NL (i.e., typing ENTER CR does not become LF)
+            INPCK |               // Disable parity checking
             ISTRIP |              // Do not strip off 8th bit
+            IXON |                // Disable software flow control (e.g. CTRL+S XOFF and CTRL+Q XON)
             INLCR |               // No NL-to-CR
-            IGNCR |               // Do not ignore CR
-            IXON                  // Disable XON/XOFF flow control on output
+            IGNCR                 // Do not ignore CR
         );
-        tty.c_oflag |= OPOST; // Enable output processing
-        // Enable parity generation on output and checking for input
-        tty.c_cflag &= ~(CSIZE | PARENB);
-        tty.c_cflag |= CS8;
+        tty.c_oflag &= ~(OPOST);  // Disable output processing (e.g., LF -> CR LF)
+        tty.c_cflag |= CS8;       // Set char size to 8 bits
+        tty.c_cflag &= ~(PARENB); // Disable parity generation on output and checking on input
         // Read returns with 1 char and no delay
         tty.c_cc[VMIN] = 1;
         tty.c_cc[VTIME] = 0;
