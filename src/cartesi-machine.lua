@@ -403,7 +403,7 @@ local ram_image_filename = images_path .. "linux.bin"
 local ram_length = 64 << 20
 local rom_image_filename = images_path .. "rom.bin"
 local rom_bootargs =
-    "console=hvc0 rootfstype=ext2 root=/dev/mtdblock0 rw quiet swiotlb=noforce init=/opt/cartesi/bin/init"
+    "console=hvc0 rootfstype=ext2 root=/dev/mtdblock0 rw quiet swiotlb=noforce uio_pdrv_genirq.of_id=ctsi-rollup init=/opt/cartesi/bin/init"
 local rollup
 local uarch
 local rollup_advance
