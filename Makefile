@@ -85,7 +85,7 @@ BOOST_VERSION=1_83_0
 
 # Docker image tag
 TAG ?= devel
-DEBIAN_IMG ?= cartesi/machine-emulator:$(TAG).deb
+DEBIAN_IMG ?= juztamau5/machine-emulator:$(TAG).deb
 
 # Docker image platform
 BUILD_PLATFORM ?=
@@ -227,10 +227,10 @@ $(SUBCLEAN) $(DEPCLEAN): %.clean:
 	$(MAKE) -C $* clean
 
 build-linux-env:
-	docker build $(DOCKER_PLATFORM) --target linux-env -t cartesi/linux-env:$(TAG) -f Dockerfile .
+	docker build $(DOCKER_PLATFORM) --target linux-env -t juztamau5/linux-env:$(TAG) -f Dockerfile .
 
 build-debian-image:
-	docker build $(DOCKER_PLATFORM) --build-arg RELEASE=$(release) --build-arg COVERAGE=$(coverage) --build-arg SANITIZE=$(sanitize) --build-arg MACHINE_EMULATOR_VERSION=$(MACHINE_EMULATOR_VERSION) -t cartesi/machine-emulator:$(TAG) -f Dockerfile .
+	docker build $(DOCKER_PLATFORM) --build-arg RELEASE=$(release) --build-arg COVERAGE=$(coverage) --build-arg SANITIZE=$(sanitize) --build-arg MACHINE_EMULATOR_VERSION=$(MACHINE_EMULATOR_VERSION) -t juztamau5/machine-emulator:$(TAG) -f Dockerfile .
 
 build-debian-package:
 	docker build $(DOCKER_PLATFORM) --target debian-packager --build-arg RELEASE=$(release) --build-arg COVERAGE=$(coverage) --build-arg SANITIZE=$(sanitize) --build-arg MACHINE_EMULATOR_VERSION=$(MACHINE_EMULATOR_VERSION=) -t $(DEBIAN_IMG) -f Dockerfile .
@@ -242,10 +242,10 @@ copy:
 	   docker rm $$ID
 
 check-linux-env:
-	@if docker images $(DOCKER_PLATFORM) -q cartesi/linux-env:$(TAG)$(image_name) 2>/dev/null | grep -q .; then \
-		echo "Docker image cartesi/linux-env:$(TAG) exists"; \
+	@if docker images $(DOCKER_PLATFORM) -q juztamau5/linux-env:$(TAG)$(image_name) 2>/dev/null | grep -q .; then \
+		echo "Docker image juztamau5/linux-env:$(TAG) exists"; \
 	else \
-		echo "Docker image cartesi/linux-env:$(TAG) does not exist. Creating:"; \
+		echo "Docker image juztamau5/linux-env:$(TAG) does not exist. Creating:"; \
 		$(MAKE) build-linux-env; \
 	fi
 
@@ -257,7 +257,7 @@ linux-env: check-linux-env
 		-e GID=$$(id -g) \
 		-v `pwd`:/opt/cartesi/machine-emulator \
 		-w /opt/cartesi/machine-emulator \
-		cartesi/linux-env:$(TAG) /bin/bash
+		juztamau5/linux-env:$(TAG) /bin/bash
 
 linux-env-exec: check-linux-env
 	@docker run --hostname linux-env --rm \
@@ -267,7 +267,7 @@ linux-env-exec: check-linux-env
 		-e GID=$$(id -g) \
 		-v `pwd`:/opt/cartesi/machine-emulator \
 		-w /opt/cartesi/machine-emulator \
-		cartesi/linux-env:$(TAG) /bin/bash -c "$(CONTAINER_COMMAND)"
+		juztamau5/linux-env:$(TAG) /bin/bash -c "$(CONTAINER_COMMAND)"
 
 uarch-with-linux-env:
 	@$(MAKE) linux-env-exec CONTAINER_COMMAND="make uarch"

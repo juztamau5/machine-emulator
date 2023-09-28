@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM cartesi/toolchain:0.15.0-rv64ima-lp64 as linux-env
+FROM --platform=$TARGETPLATFORM juztamau5/toolchain:0.15.1 as linux-env
 ARG GIT_COMMIT=""
 ARG RELEASE=no
 ARG COVERAGE=no
